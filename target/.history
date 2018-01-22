@@ -1,0 +1,29 @@
+run
+"hello world".split(" ")
+repl
+eval
+eval "hello world".split(" ")
+hel
+help
+console
+exit
+run
+compile
+exit
+run
+exit
+run
+exit
+~testQuick
+exit
+~testQuick
+exit
+run
+~testQuick
+exit
+run
+~testQuick
+exit
+run
+~testQuick
+console
