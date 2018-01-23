@@ -3,7 +3,11 @@ package example
 import scala.Char
 
 object Games extends ComputeScore with App {
-  printHelper()
+  printHelper("X X X X X X X X X X X X")
+  printHelper("9- 9- 9- 9- 9- 9- 9- 9- 9- 9-")
+  printHelper("5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5")
+  printHelper("52 42 32 42 52 62 5/ 5/ X X 32")
+  printHelper("-- -- -- -- -- -- -- -- -- X --")
 }
 
 trait ComputeScore {
@@ -27,7 +31,7 @@ trait ComputeScore {
   
   lazy val digitSpareMiss : Array[String] = digits.map(x => x + spare + miss)
   lazy val digitSpareDigit : Array[String] 
-    = digitDigit.map(x => x(0) + "/" + x(1))
+    = for(x <- digits; y <- digits) yield {x + "/" + y}
   lazy val digitSpareStrike : Array[String] = digits.map(x => x + spare + strike)
   
   lazy val missSpareMiss : String = miss + spare + miss
@@ -40,7 +44,8 @@ trait ComputeScore {
   }
   
   /* Given a single frame from the first 9 frames, output first and second
-     turn's (simple) scores.
+     turn's (simple) scores. Still assuming correct input, if not given time
+     constraints, would use Optional or Try to represent invalid states.
   */
   def singleFrameScore(frame : String): (Int, Int) = {
     val result = frame match {
@@ -104,18 +109,50 @@ trait ComputeScore {
     return result
   }
 
+  // Checks if a given frame is a spare or not.
+  def isSpare(frame: (Int, Int)): Boolean = {
+    return frame != (10, 0) && frame._1 + frame._2 == 10
+  }
+
+  // Checks if a given frame is a strike or not.
+  def isStrike(frame: (Int, Int)): Boolean = {
+    return frame == (10, 0)
+  }
+
+  // Given the turns for all of the frames, calculate the scores for each frame.
+  def totalScores(frames : Array[(Int, Int)], 
+                  lastFrame: (Int, Int, Int)): Array[Int] = {
+    val result = Array(0,0,0,0,0,0,0,0,0,0)
+    result(9) = lastFrame._1 + lastFrame._2 + lastFrame._3
+    for ( i <- 0 to 8) {
+        val (nextTurn, nextNextTurn) = i match {
+          case 8 => (lastFrame._1, lastFrame._2)
+          case 7 if isStrike(frames(i+1)) => (10, lastFrame._1)
+          case _ if isStrike(frames(i+1)) => (10, frames(i+2)._1)
+          case _ => frames(i+1)
+        }
+        result(i) = frames(i) match {
+          case (fst, snd) if isStrike((fst, snd))
+            => fst + snd + nextTurn + nextNextTurn
+          case (fst, snd) if isSpare((fst, snd)) => fst + snd + nextTurn
+          case (fst, snd) => fst + snd
+        } 
+          
+    }
+    return result 
+  }
+
   // Given a valid input string, calculate game score
   def evalScore(input : String): Int = {
     val arr : Array[String] = inputToArray(input)
     val firstFrames : Array[(Int, Int)] = firstFramesScores(arr.take(9))
-    val lastFrame : (Int, Int, Int) = lastFrameScore(arr.drop(9))  
-    return -1
+    val lastFrame : (Int, Int, Int) = lastFrameScore(arr.drop(9))
+    val scores = totalScores(firstFrames, lastFrame)
+    return scores.sum
   }
   
   // Helper function to print score, given input
-  def printHelper() {
-    // def printHelper(input : String) {
-    // println(evalScore(input))  
-    println(digitSpareDigit.mkString(" "))
+  def printHelper(input : String) {
+    println(evalScore(input))  
   }
 }

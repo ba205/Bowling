@@ -1,6 +1,22 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:13:40: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Int(2)[0m
-[0m[[0m[31merror[0m] [0m[0m required: String[0m
-[0m[[0m[31merror[0m] [0m[0m    Games.lastFrameScore(Array("X","X",2)) shouldEqual (10, 10, 2)[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:84:30: value X is not a member of org.scalatest.words.ResultOfStringPassedToVerb[0m
+[0m[[0m[31merror[0m] [0m[0m  "evalScore" should "score "X X X X X X X X X X X X" as 300" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:84:32: not found: value X[0m
+[0m[[0m[31merror[0m] [0m[0m  "evalScore" should "score "X X X X X X X X X X X X" as 300" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:84:36: not found: value X[0m
+[0m[[0m[31merror[0m] [0m[0m  "evalScore" should "score "X X X X X X X X X X X X" as 300" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:84:40: not found: value X[0m
+[0m[[0m[31merror[0m] [0m[0m  "evalScore" should "score "X X X X X X X X X X X X" as 300" in {[0m
 [0m[[0m[31merror[0m] [0m[0m                                       ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:84:44: not found: value X[0m
+[0m[[0m[31merror[0m] [0m[0m  "evalScore" should "score "X X X X X X X X X X X X" as 300" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:84:48: not found: value X[0m
+[0m[[0m[31merror[0m] [0m[0m  "evalScore" should "score "X X X X X X X X X X X X" as 300" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/test/scala/example/BowlingTest.scala:84:52: value X is not a member of StringContext[0m
+[0m[[0m[31merror[0m] [0m[0m  "evalScore" should "score "X X X X X X X X X X X X" as 300" in {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m7 errors found[0m

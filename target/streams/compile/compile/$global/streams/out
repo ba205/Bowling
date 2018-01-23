@@ -1,10 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/main/scala/example/Bowling.scala:47:47: not found: value ds[0m
-[0m[[0m[31merror[0m] [0m[0m        case dm if digitMiss.contains(dm) => (ds(0).asDigit, 0)[0m
-[0m[[0m[31merror[0m] [0m[0m                                              ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/main/scala/example/Bowling.scala:48:48: not found: value ds[0m
-[0m[[0m[31merror[0m] [0m[0m        case dd if digitDigit.contains(dd) => (ds(0).asDigit, ds(1).asDigit)[0m
-[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/main/scala/example/Bowling.scala:48:63: not found: value ds[0m
-[0m[[0m[31merror[0m] [0m[0m        case dd if digitDigit.contains(dd) => (ds(0).asDigit, ds(1).asDigit)[0m
-[0m[[0m[31merror[0m] [0m[0m                                                              ^[0m
-[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/main/scala/example/Bowling.scala:143:9: Missing closing brace `}' assumed here[0m
+[0m[[0m[31merror[0m] [0m[0m        result(i) = frames(i) match {[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

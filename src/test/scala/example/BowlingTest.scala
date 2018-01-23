@@ -80,4 +80,29 @@ class BowlingTest extends FlatSpec with Matchers {
   "singleFrameScore" should "interpret digit, digit" in {
     Games.singleFrameScore("27") shouldEqual (2, 7)
   }
+  
+  "evalScore" should "score 'X X X X X X X X X X X X' as 300" in {
+    Games.evalScore("X X X X X X X X X X X X") shouldEqual 300
+  }
+
+  "evalScore" should "score '9- 9- 9- 9- 9- 9- 9- 9- 9- 9-' as 90" in {
+    Games.evalScore("9- 9- 9- 9- 9- 9- 9- 9- 9- 9-") shouldEqual 90
+  }
+
+  "evalScore" should "score '5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5' as 150" in {
+    Games.evalScore("5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5") shouldEqual 150
+  }
+
+  "evalScore" should "score '5/ X 5/ X 5/ X 5/ X 5/ 5/X' as 195" in {
+    Games.evalScore("5/ X 5/ X 5/ X 5/ X 5/ 5/X") shouldEqual 195
+  }
+
+  "evalScore" should "score '-- -- -- -- -- -- -- -- -- X --' as 10" in {
+    Games.evalScore("-- -- -- -- -- -- -- -- -- X --") shouldEqual 10
+  }
+ 
+  "evalScore" should "score '52 42 32 42 52 62 5/ 5/ X X 32' as 112" in {
+    Games.evalScore("52 42 32 42 52 62 5/ 5/ X X 32") shouldEqual 112
+  }
+
 }

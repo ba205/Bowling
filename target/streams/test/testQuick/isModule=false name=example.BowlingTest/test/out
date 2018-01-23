@@ -37,3 +37,15 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should interpret digit, miss[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32msingleFrameScore[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should interpret digit, digit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score 'X X X X X X X X X X X X' as 300[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '9- 9- 9- 9- 9- 9- 9- 9- 9- 9-' as 90[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5' as 150[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '5/ X 5/ X 5/ X 5/ X 5/ 5/X' as 195[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '-- -- -- -- -- -- -- -- -- X --' as 10[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '52 42 32 42 52 62 5/ 5/ X X 32' as 112[0m[0m
