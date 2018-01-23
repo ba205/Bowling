@@ -3,7 +3,7 @@ package example
 import scala.Char
 
 object Games extends ComputeScore with App {
-  printHello()
+  printHelper()
 }
 
 trait ComputeScore {
@@ -16,15 +16,20 @@ trait ComputeScore {
     = Array("1", "2", "3", "4", "5", "6", "7", "8","9")
   lazy val digitMiss : Array[String] = digits.map(x => x + miss)
   lazy val digitSpare : Array[String] = digits.map(x => x + spare)
+  // Can't knock down more than 10 pins, exactly ten pins with a digit first is
+  // a spare
   lazy val digitDigit : Array[String]
     = for(x <- digits; y <- digits; if x.toInt + y.toInt < 10) yield {x+y}
+  
   lazy val missMiss : String = miss + miss
   lazy val missSpare : String = miss + spare
   lazy val missDigit : Array[String] = digits.map(x => miss + x) 
+  
   lazy val digitSpareMiss : Array[String] = digits.map(x => x + spare + miss)
   lazy val digitSpareDigit : Array[String] 
     = digitDigit.map(x => x(0) + "/" + x(1))
   lazy val digitSpareStrike : Array[String] = digits.map(x => x + spare + strike)
+  
   lazy val missSpareMiss : String = miss + spare + miss
   lazy val missSpareDigit : Array[String] = digits.map(x => miss + spare + x)
   lazy val missSpareStrike : String = miss + spare + strike
@@ -34,11 +39,30 @@ trait ComputeScore {
       return str.split(" ")
   }
   
+  /* Given a single frame from the first 9 frames, output first and second
+     turn's (simple) scores.
+  */
+  def singleFrameScore(frame : String): (Int, Int) = {
+    val result = frame match {
+        case "X" => (10, 0)
+        case md if missDigit.contains(md) => (0, md(1).asDigit)
+        case mm if mm == missMiss => (0, 0)
+        case ms if ms == missSpare => (0, 10)
+        case ds if digitSpare.contains(ds) => (ds(0).asDigit, 10 - ds(0).asDigit)
+        case dm if digitMiss.contains(dm) => (dm(0).asDigit, 0)
+        case dd if digitDigit.contains(dd) => (dd(0).asDigit, dd(1).asDigit)
+        // Catch all since not using Try/Optional due to time contraints,
+        // also this should never happen with valid input
+        case _ => (-1, -1)
+    }
+    return result
+  }
+
   /* Given the first 9 frame strings, output Array of tuples for pins knocked
      down in first and second turn. 
   */
   def firstFramesScores(frames : Array[String]): Array[(Int, Int)] = {
-    return Array((0,0))
+    return frames.map(singleFrameScore)
   }
 
   /* Given the last frame and bonus throws, output pins knocked down in first,
@@ -73,7 +97,7 @@ trait ComputeScore {
         case Array(msd) if missSpareDigit.contains(msd)
           => (0, 10, msd(2).asDigit)
         case Array(mss) if mss == missSpareStrike => (0, 10, 10)
-        // Since not using Try/Optional due to time contraints,
+        // Catch all since not using Try/Optional due to time contraints,
         // also this should never happen with valid input
         case _                  => (-1, -1, -1)
     }
@@ -88,7 +112,10 @@ trait ComputeScore {
     return -1
   }
   
-  def printHello() {
-      println(digitSpareDigit.mkString(" "))
+  // Helper function to print score, given input
+  def printHelper() {
+    // def printHelper(input : String) {
+    // println(evalScore(input))  
+    println(digitSpareDigit.mkString(" "))
   }
 }

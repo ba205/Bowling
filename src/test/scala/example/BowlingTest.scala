@@ -56,4 +56,28 @@ class BowlingTest extends FlatSpec with Matchers {
   "lastFrameScore" should "interpret miss, spare, digit" in {
     Games.lastFrameScore(Array("-/2")) shouldEqual (0,10,2)
   }
+
+  "singleFrameScore" should "interpret miss, digit" in {
+    Games.singleFrameScore("-2") shouldEqual (0,2)
+  }
+
+  "singleFrameScore" should "interpret miss, miss" in {
+    Games.singleFrameScore("--") shouldEqual (0,0)
+  }
+
+  "singleFrameScore" should "interpret miss, spare" in {
+    Games.singleFrameScore("-/") shouldEqual (0,10)
+  }
+
+  "singleFrameScore" should "interpret digit, spare" in {
+    Games.singleFrameScore("2/") shouldEqual (2, 8)
+  }
+
+  "singleFrameScore" should "interpret digit, miss" in {
+    Games.singleFrameScore("2-") shouldEqual (2, 0)
+  }
+
+  "singleFrameScore" should "interpret digit, digit" in {
+    Games.singleFrameScore("27") shouldEqual (2, 7)
+  }
 }
