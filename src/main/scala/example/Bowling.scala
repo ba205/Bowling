@@ -5,9 +5,8 @@ object Games extends ComputeScore with App {
 }
 
 trait ComputeScore {
- 
-  lazy val greeting: String = "hello"
 
+  // Enumerate the possible cases for a single frame. 
   lazy val strike : String = "X"
   lazy val spare : String = "/"
   lazy val miss : String = "-"
@@ -25,7 +24,13 @@ trait ComputeScore {
   lazy val missSpareDigit : Array[String] = digits.map(x => miss + spare + x)
   lazy val missSpareStrike : String = miss + spare + strike
 
+  // Transform the input (assumed valid) into an array of strings.
+  def inputToArray(str : String): Array[String] = {
+      val result = str.split(" ")
+      return result
+  }
+
   def printHello() {
-      println(missSpareDigit.mkString(" "))
+      println(inputToArray("X X X X X X X X X X X X").mkString(" "))
   }
 }

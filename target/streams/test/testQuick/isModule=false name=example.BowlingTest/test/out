@@ -1,3 +1,3 @@
 [0m[[0m[0minfo[0m] [0m[0m[32mBowlingTest:[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32mThe Hello object[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[32m- should say hello[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32minputToArray[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should turn a string of space delimited strikes to an array of strikes[0m[0m
