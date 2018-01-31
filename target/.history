@@ -46,3 +46,17 @@ run
 run
 ~testQuick
 run
+:testQuick
+~testQuick
+run
+~testQuick
+run
+~testQucik
+~testQuick
+run
+exit
+run
+:exit
+exit
+run
+~testQuick

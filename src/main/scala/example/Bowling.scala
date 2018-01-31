@@ -1,6 +1,9 @@
 package example
 
 import scala.Char
+import scala.util.Either
+import scalaz._
+import Scalaz._
 
 object Games extends ComputeScore with App {
   printHelper("X X X X X X X X X X X X")
@@ -47,18 +50,18 @@ trait ComputeScore {
      turn's (simple) scores. Still assuming correct input, if not given time
      constraints, would use Optional or Try to represent invalid states.
   */
-  def singleFrameScore(frame : String): (Int, Int) = {
-    val result = frame match {
-        case "X" => (10, 0)
-        case md if missDigit.contains(md) => (0, md(1).asDigit)
-        case mm if mm == missMiss => (0, 0)
-        case ms if ms == missSpare => (0, 10)
-        case ds if digitSpare.contains(ds) => (ds(0).asDigit, 10 - ds(0).asDigit)
-        case dm if digitMiss.contains(dm) => (dm(0).asDigit, 0)
-        case dd if digitDigit.contains(dd) => (dd(0).asDigit, dd(1).asDigit)
-        // Catch all since not using Try/Optional due to time contraints,
-        // also this should never happen with valid input
-        case _ => (-1, -1)
+  def singleFrameScore(frame : String): Option[(Int, Int)] = {
+    val result : Option[(Int, Int)] = frame match {
+        case "X" => Some((10, 0))
+        case md if missDigit.contains(md) => Some((0, md(1).asDigit))
+        case mm if mm == missMiss => Some((0, 0))
+        case ms if ms == missSpare => Some((0, 10))
+        case ds if digitSpare.contains(ds) 
+          => Some((ds(0).asDigit, 10 - ds(0).asDigit))
+        case dm if digitMiss.contains(dm) => Some((dm(0).asDigit, 0))
+        case dd if digitDigit.contains(dd) => 
+          Some((dd(0).asDigit, dd(1).asDigit))
+        case _ => None
     }
     return result
   }
@@ -66,45 +69,53 @@ trait ComputeScore {
   /* Given the first 9 frame strings, output Array of tuples for pins knocked
      down in first and second turn. 
   */
-  def firstFramesScores(frames : Array[String]): Array[(Int, Int)] = {
-    return frames.map(singleFrameScore)
+  def firstFramesScores(frames : Array[String]): 
+    Option[Array[(Int, Int)]] = {
+    val mappedFrames: Array[Option[(Int, Int)]]
+      = frames.map(singleFrameScore)
+    val result = mappedFrames.toList.sequence.map(x => x.toArray)
+    return result
   }
 
   /* Given the last frame and bonus throws, output pins knocked down in first,
      second, and third turn. Still assuming correct input, if not given time
      constraints, would use Optional or Try to represent invalid states.
   */
-  def lastFrameScore(frames: Array[String]): (Int, Int, Int) = {
+  def lastFrameScore(frames: Array[String]): 
+    Option[(Int, Int, Int)] = {
     val result = frames match {
-        case Array("X","X","X") => (10, 10, 10)
-        case Array("X","X","-") => (10, 10, 0)
-        case Array("X","X", n ) if digits.contains(n) => (10, 10, n.toInt)
+        case Array("X","X","X") => Some((10, 10, 10))
+        case Array("X","X","-") => Some((10, 10, 0))
+        case Array("X","X", n ) if digits.contains(n) 
+          => Some((10, 10, n.toInt))
         case Array("X", ds) if digitSpare.contains(ds) 
-          => (10, ds(0).asDigit, 10 - ds(0).asDigit)
-        case Array("X", dm) if digitMiss.contains(dm) => (10, dm(0).asDigit, 0)
+          => Some((10, ds(0).asDigit, 10 - ds(0).asDigit))
+        case Array("X", dm) if digitMiss.contains(dm) 
+          => Some((10, dm(0).asDigit, 0))
         case Array("X", dd) if digitDigit.contains(dd) 
-          => (10, dd(0).asDigit, dd(1).asDigit)
-        case Array("X", ms) if ms == missSpare => (10, 0, 10)
-        case Array("X", md) if missDigit.contains(md) => (10, 0, md(1).asDigit)
-        case Array("X", mm) if mm == missMiss => (10, 0, 0)
-        case Array(dm) if digitMiss.contains(dm) => (dm(0).asDigit, 0, 0)
+          => Some((10, dd(0).asDigit, dd(1).asDigit))
+        case Array("X", ms) if ms == missSpare => Some((10, 0, 10))
+        case Array("X", md) if missDigit.contains(md) 
+          => Some((10, 0, md(1).asDigit))
+        case Array("X", mm) if mm == missMiss => Some((10, 0, 0))
+        case Array(dm) if digitMiss.contains(dm) 
+          => Some((dm(0).asDigit, 0, 0))
         case Array(dd) if digitDigit.contains(dd) 
-          => (dd(0).asDigit, dd(1).asDigit, 0)
-        case Array(mm) if mm == missMiss => (0, 0, 0)
-        case Array(md) if missDigit.contains(md) => (0, md(1).asDigit, 0)
+          => Some((dd(0).asDigit, dd(1).asDigit, 0))
+        case Array(mm) if mm == missMiss => Some((0, 0, 0))
+        case Array(md) if missDigit.contains(md) 
+          => Some((0, md(1).asDigit, 0))
         case Array(dsm) if digitSpareMiss.contains(dsm)
-          => (dsm(0).asDigit, 10 - dsm(0).asDigit, 0)
+          => Some((dsm(0).asDigit, 10 - dsm(0).asDigit, 0))
         case Array(dsd) if digitSpareDigit.contains(dsd)
-          => (dsd(0).asDigit, 10 - dsd(0).asDigit, dsd(2).asDigit)
+          => Some((dsd(0).asDigit, 10 - dsd(0).asDigit, dsd(2).asDigit))
         case Array(dss) if digitSpareStrike.contains(dss)
-          => (dss(0).asDigit, 10 - dss(0).asDigit, 10)
-        case Array(msm) if msm == missSpareMiss => (0, 10, 0)
+          => Some((dss(0).asDigit, 10 - dss(0).asDigit, 10))
+        case Array(msm) if msm == missSpareMiss => Some((0, 10, 0))
         case Array(msd) if missSpareDigit.contains(msd)
-          => (0, 10, msd(2).asDigit)
-        case Array(mss) if mss == missSpareStrike => (0, 10, 10)
-        // Catch all since not using Try/Optional due to time contraints,
-        // also this should never happen with valid input
-        case _                  => (-1, -1, -1)
+          => Some((0, 10, msd(2).asDigit))
+        case Array(mss) if mss == missSpareStrike => Some((0, 10, 10))
+        case _ => None
     }
     return result
   }
@@ -124,10 +135,11 @@ trait ComputeScore {
                   lastFrame: (Int, Int, Int)): Array[Int] = {
     val result = Array(0,0,0,0,0,0,0,0,0,0)
     result(9) = lastFrame._1 + lastFrame._2 + lastFrame._3
-    for ( i <- 0 to 8) {
+    val n = frames.length
+    for ( i <- 0 to n-1) {
         val (nextTurn, nextNextTurn) = i match {
-          case 8 => (lastFrame._1, lastFrame._2)
-          case 7 if isStrike(frames(i+1)) => (10, lastFrame._1)
+          case _ if i == n-1 => (lastFrame._1, lastFrame._2)
+          case _ if i == n-2 && isStrike(frames(i+1)) => (10, lastFrame._1)
           case _ if isStrike(frames(i+1)) => (10, frames(i+2)._1)
           case _ => frames(i+1)
         }
@@ -143,12 +155,21 @@ trait ComputeScore {
   }
 
   // Given a valid input string, calculate game score
-  def evalScore(input : String): Int = {
+  def evalScore(input : String): Option[Int] = {
     val arr : Array[String] = inputToArray(input)
-    val firstFrames : Array[(Int, Int)] = firstFramesScores(arr.take(9))
-    val lastFrame : (Int, Int, Int) = lastFrameScore(arr.drop(9))
-    val scores = totalScores(firstFrames, lastFrame)
-    return scores.sum
+    val firstFrames : Option[Array[(Int, Int)]] 
+      = firstFramesScores(arr.take(9))
+    val lastFrame : Option[(Int, Int, Int)] 
+      = lastFrameScore(arr.drop(9))
+    val result = (firstFrames, lastFrame) match {
+      case (None, _) => None
+      case (_, None) => None
+      case (Some(frames), Some(last)) 
+        => Some((totalScores(frames, last).sum))
+    }
+    //val scores = totalScores(firstFrames, lastFrame)
+    return result 
+    //scores.sum
   }
   
   // Helper function to print score, given input
