@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/main/scala/example/Bowling.scala:165:30: not found: value s[0m
-[0m[[0m[31merror[0m] [0m[0m      case (None, _) => Left(s)[0m
-[0m[[0m[31merror[0m] [0m[0m                             ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/main/scala/example/Bowling.scala:166:30: not found: value s[0m
-[0m[[0m[31merror[0m] [0m[0m      case (_, None) => Left(s)[0m
-[0m[[0m[31merror[0m] [0m[0m                             ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/basilahmad/Desktop/ComputerScience/Scala/bowling/Bowling/src/main/scala/example/Bowling.scala:166:5: method invalidPartialGame has return statement; needs result type[0m
+[0m[[0m[31merror[0m] [0m[0m    return result[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

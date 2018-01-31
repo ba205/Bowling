@@ -57,6 +57,18 @@ class BowlingTest extends FlatSpec with Matchers {
     Games.lastFrameScore(Array("-/2")) shouldEqual Some((0,10,2))
   }
 
+  "lastFrameScore" should "not interpret miss, spare, digit, strike" in {
+    Games.lastFrameScore(Array("-/2", "X")) shouldEqual None
+  }
+
+  "lastFrameScore" should "not interpret four strikes" in {
+    Games.lastFrameScore(Array("X", "X", "X", "X")) shouldEqual None
+  }
+
+  "lastFrameScore" should "interpret empty array as misses" in {
+    Games.lastFrameScore(Array()) shouldEqual Some((0,0,0))
+  }
+
   "singleFrameScore" should "interpret miss, digit" in {
     Games.singleFrameScore("-2") shouldEqual Some((0,2))
   }
@@ -103,6 +115,26 @@ class BowlingTest extends FlatSpec with Matchers {
  
   "evalScore" should "score '52 42 32 42 52 62 5/ 5/ X X 32' as 112" in {
     Games.evalScore("52 42 32 42 52 62 5/ 5/ X X 32") shouldEqual Some(112)
+  }
+
+  "evalScore" should "score '58 42 32 42 52 62 5/ 5/ X X 32' as None" in {
+    Games.evalScore("58 42 32 42 52 62 5/ 5/ X X 32") shouldEqual None
+  }
+  
+  "evalScore" should "score '/2 42 32 42 52 62 5/ 5/ X X 32' as None" in {
+    Games.evalScore("/2 42 32 42 52 62 5/ 5/ X X 32") shouldEqual None
+  }
+
+  "evalScore" should "score '5X 42 32 42 52 62 5/ 5/ X X 32' as None" in {
+    Games.evalScore("5X 42 32 42 52 62 5/ 5/ X X 32") shouldEqual None
+  }
+
+  "evalScore" should "score 'X X 9-' as 57" in {
+    Games.evalScore("X X 9-") shouldEqual Some(57)
+  }
+
+  "evalScore" should "not score a partial game ending in a spare" in {
+    Games.evalScore("X X 9/") shouldEqual None
   }
 
 }

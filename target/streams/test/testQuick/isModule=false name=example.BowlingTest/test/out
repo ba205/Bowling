@@ -25,6 +25,12 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should interpret digit, spare, strike[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mlastFrameScore[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should interpret miss, spare, digit[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mlastFrameScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should not interpret miss, spare, digit, strike[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mlastFrameScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should not interpret four strikes[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mlastFrameScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should interpret empty array as misses[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32msingleFrameScore[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should interpret miss, digit[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32msingleFrameScore[0m[0m
@@ -49,3 +55,13 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should score '-- -- -- -- -- -- -- -- -- X --' as 10[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should score '52 42 32 42 52 62 5/ 5/ X X 32' as 112[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '58 42 32 42 52 62 5/ 5/ X X 32' as None[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '/2 42 32 42 52 62 5/ 5/ X X 32' as None[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score '5X 42 32 42 52 62 5/ 5/ X X 32' as None[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should score 'X X 9-' as 57[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should not score a partial game ending in a spare[0m[0m

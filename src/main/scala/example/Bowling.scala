@@ -1,16 +1,16 @@
 package example
 
 import scala.Char
-import scala.util.Either
 import scalaz._
 import Scalaz._
 
 object Games extends ComputeScore with App {
-  printHelper("X X X X X X X X X X X X")
-  printHelper("9- 9- 9- 9- 9- 9- 9- 9- 9- 9-")
-  printHelper("5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5")
-  printHelper("52 42 32 42 52 62 5/ 5/ X X 32")
-  printHelper("-- -- -- -- -- -- -- -- -- X --")
+  //printHelper("X X X X X X X X X X X X")
+  //printHelper("9- 9- 9- 9- 9- 9- 9- 9- 9- 9-")
+  //printHelper("5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5")
+  //printHelper("52 42 32 42 52 62 5/ 5/ X X 32")
+  //printHelper("-- -- -- -- -- -- -- -- -- X --")
+  printHelper("X X 9/")
 }
 
 trait ComputeScore {
@@ -47,8 +47,8 @@ trait ComputeScore {
   }
   
   /* Given a single frame from the first 9 frames, output first and second
-     turn's (simple) scores. Still assuming correct input, if not given time
-     constraints, would use Optional or Try to represent invalid states.
+     turn's (simple) scores. If frame has invalid syntax, or has two digits
+     whose sum exceeds 10, return None.
   */
   def singleFrameScore(frame : String): Option[(Int, Int)] = {
     val result : Option[(Int, Int)] = frame match {
@@ -67,7 +67,7 @@ trait ComputeScore {
   }
 
   /* Given the first 9 frame strings, output Array of tuples for pins knocked
-     down in first and second turn. 
+     down in first and second turn. If any frame is invalid, return None.
   */
   def firstFramesScores(frames : Array[String]): 
     Option[Array[(Int, Int)]] = {
@@ -78,8 +78,7 @@ trait ComputeScore {
   }
 
   /* Given the last frame and bonus throws, output pins knocked down in first,
-     second, and third turn. Still assuming correct input, if not given time
-     constraints, would use Optional or Try to represent invalid states.
+     second, and third turn. If any frame is invalid, return None.
   */
   def lastFrameScore(frames: Array[String]): 
     Option[(Int, Int, Int)] = {
@@ -115,6 +114,7 @@ trait ComputeScore {
         case Array(msd) if missSpareDigit.contains(msd)
           => Some((0, 10, msd(2).asDigit))
         case Array(mss) if mss == missSpareStrike => Some((0, 10, 10))
+        case Array() => Some((0,0,0))
         case _ => None
     }
     return result
@@ -154,6 +154,18 @@ trait ComputeScore {
     return result 
   }
 
+  def invalidPartialGame(arr : Array[String]): Boolean = {
+    val n : Int = arr.length - 1
+    val lastFirstFrame : String = arr(n)
+    val result = lastFirstFrame match {
+      case _ if lastFirstFrame == missSpare => true
+      case _ if digitSpare.contains(lastFirstFrame)
+        => true
+      case _ => false
+    }
+    return result
+  }
+
   // Given a valid input string, calculate game score
   def evalScore(input : String): Option[Int] = {
     val arr : Array[String] = inputToArray(input)
@@ -165,11 +177,13 @@ trait ComputeScore {
       case (None, _) => None
       case (_, None) => None
       case (Some(frames), Some(last)) 
+        if arr.drop(9).isEmpty && invalidPartialGame(arr.take(9))
+        => None
+      // Handles all valid partial and full games
+      case (Some(frames), Some(last)) 
         => Some((totalScores(frames, last).sum))
     }
-    //val scores = totalScores(firstFrames, lastFrame)
     return result 
-    //scores.sum
   }
   
   // Helper function to print score, given input
