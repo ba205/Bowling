@@ -161,6 +161,7 @@ trait ComputeScore {
       case _ if lastFirstFrame == missSpare => true
       case _ if digitSpare.contains(lastFirstFrame)
         => true
+      case _ if lastFirstFrame == strike => true
       case _ => false
     }
     return result

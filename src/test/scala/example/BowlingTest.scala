@@ -136,5 +136,9 @@ class BowlingTest extends FlatSpec with Matchers {
   "evalScore" should "not score a partial game ending in a spare" in {
     Games.evalScore("X X 9/") shouldEqual None
   }
+  
+  "evalScore" should "not score a partial game ending in a strike" in {
+    Games.evalScore("X X X") shouldEqual None
+  }
 
 }

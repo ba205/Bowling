@@ -65,3 +65,5 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should score 'X X 9-' as 57[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should not score a partial game ending in a spare[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mevalScore[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should not score a partial game ending in a strike[0m[0m
