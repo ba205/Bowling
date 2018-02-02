@@ -83,6 +83,7 @@ trait ComputeScore {
   def lastFrameScore(frames: Array[String]): 
     Option[(Int, Int, Int)] = {
     val result = frames match {
+        //Full game last frame cases
         case Array("X","X","X") => Some((10, 10, 10))
         case Array("X","X","-") => Some((10, 10, 0))
         case Array("X","X", n ) if digits.contains(n) 
@@ -114,6 +115,7 @@ trait ComputeScore {
         case Array(msd) if missSpareDigit.contains(msd)
           => Some((0, 10, msd(2).asDigit))
         case Array(mss) if mss == missSpareStrike => Some((0, 10, 10))
+        // Partial Game case, when no special last frame
         case Array() => Some((0,0,0))
         case _ => None
     }
@@ -137,12 +139,14 @@ trait ComputeScore {
     result(9) = lastFrame._1 + lastFrame._2 + lastFrame._3
     val n = frames.length
     for ( i <- 0 to n-1) {
+        //Get next two turns for spare/strike calculations
         val (nextTurn, nextNextTurn) = i match {
           case _ if i == n-1 => (lastFrame._1, lastFrame._2)
           case _ if i == n-2 && isStrike(frames(i+1)) => (10, lastFrame._1)
           case _ if isStrike(frames(i+1)) => (10, frames(i+2)._1)
           case _ => frames(i+1)
         }
+        //Calculate score for each frame
         result(i) = frames(i) match {
           case (fst, snd) if isStrike((fst, snd))
             => fst + snd + nextTurn + nextNextTurn
@@ -154,6 +158,10 @@ trait ComputeScore {
     return result 
   }
 
+  /*Only called when a partial game is detected. If the last frame is a
+    strike or a spare, the score is pending, so you can't calculate any
+    score. Returns true in that situation.
+  */
   def invalidPartialGame(arr : Array[String]): Boolean = {
     val n : Int = arr.length - 1
     val lastFirstFrame : String = arr(n)
